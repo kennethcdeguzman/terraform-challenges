@@ -1,0 +1,38 @@
+
+
+1. Create a container named "my_nginx_container", with the docker image "nginx:latest"
+	
+2. Attach network "my_network" to your container
+	* verify your current terraform setup with
+	
+	 - $terraform show
+	
+	* verify your container is attached to your network
+	
+	 - $docker inspect <container-name> -f "{{json .NetworkSettings.Networks}}"
+
+3. copy index.html to your home project folder
+	* Create a volume block with the container path going to "/usr/share/nginx/html", and the path to the host going to the dir where your index.html is residing
+
+4. destroy all your terraform resources
+
+5. Display your current terraform workspace
+	- $ terraform workspace show
+	* Create 2 terraform workspaces (dev, test)
+	- $ terraform workspace new dev
+	- $ terraform workspace new test
+
+6. Create a variable block named "nginx_container_conf" type "map(map(string))"
+	* under default map create 2 keys (test, dev)
+	* under each keys(test,dev) create 2 key value maps
+		dev = {
+      		name = "nginx-dev"
+      		external_port = "8080"
+    	}
+
+    	test = {
+      		name = "nginx-test"
+      		external_port = "8081"
+    	}
+    * in your "docker_container" block, set the container name to lookup the name value of whatever terraform workspace you're currently at, in your "nginx_container_conf" variable block
+    * in your "docker_container" block, set the container external port to lookup the external_port value of whatever terraform workspace you're currently at, in your "nginx_container_conf" variable block

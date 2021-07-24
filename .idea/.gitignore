@@ -1,0 +1,9 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+/docker-container/.terraform
+/docker-container/terraform.tfstate.d
+/docker-container/.terraform.lock.hcl
+/docker-container/terraform.tfstate
+/docker-container/terraform.tfstate.backup
